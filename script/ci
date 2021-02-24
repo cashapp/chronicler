@@ -1,0 +1,14 @@
+#!/bin/bash
+set -euxo pipefail
+
+pushd "$( cd "$( dirname "${BASH_SOURCE[0]}" )/../" &> /dev/null && pwd )" || exit 1
+  rm -Rf cash-ci
+  git clone --depth=1 https://github.com/squareup/cash-ci.git
+  TEST_RUNNER=${TEST_RUNNER:-compile}
+  case $TEST_RUNNER in
+    *)
+      ./cash-ci/polyrepo-cash-ci -s chronicler -b CASH_LIB_CI
+      ./player/src/scripts/build-player-docker-image.sh
+      ;;
+  esac
+popd || exit 1

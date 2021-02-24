@@ -1,0 +1,11 @@
+<configuration>
+    <appender name="file-json" class="ch.qos.logback.core.FileAppender">
+        <file>/tmp/adhoc.log</file>
+        <append>true</append>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="file-json"/>
+    </root>
+</configuration>

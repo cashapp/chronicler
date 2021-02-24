@@ -1,0 +1,12 @@
+/bin
+/cash-ci/
+.gradle
+**/out/
+.idea
+build/
+*.iml
+*.swp
+polyrepo-settings.gradle
+dev/
+docker-sources/
+polyrepo-settings.gradle.kts

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package squareup.chronicler;
+import "google/protobuf/timestamp.proto";
+
+message Statement {
+  string trace_id = 1;
+  string thread_id = 2;
+  string connection_id = 3;
+
+  string sql = 10;
+
+  bool success = 20;
+  uint64 rows_affected = 21;
+
+  google.protobuf.Timestamp client_start = 30;
+  google.protobuf.Timestamp client_end = 31;
+}
