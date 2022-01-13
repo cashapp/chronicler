@@ -2,7 +2,6 @@ package com.squareup.cash.chronicler
 
 import com.mysql.cj.MysqlConnection
 import com.mysql.cj.Query
-import com.mysql.cj.Session
 import com.mysql.cj.interceptors.QueryInterceptor
 import com.mysql.cj.log.Log
 import com.mysql.cj.protocol.Resultset
@@ -18,7 +17,6 @@ const val configNameProperty = "chroniclerConfigName"
 class ChroniclerInterceptor : QueryInterceptor {
   private lateinit var log: Log
 
-  private lateinit var serverSession: Session
   private var inFlightQueryDetails: InFlightQueryDetails? = null
   private var config: Config? = null
 
@@ -41,7 +39,6 @@ class ChroniclerInterceptor : QueryInterceptor {
       this.log.logInfo("Configuration set for configName '$configName'")
       config = it
     }
-    this.serverSession = conn.session
   }
 
   override fun <T : Resultset> preProcess(
@@ -74,7 +71,7 @@ class ChroniclerInterceptor : QueryInterceptor {
             Statement.Builder()
               .apply {
                 trace_id = ctx.traceId
-                connection_id = this@ChroniclerInterceptor.serverSession.threadId.toString(32)
+                connection_id = serverSession.capabilities.threadId.toString(32)
                 thread_id = ctx.threadId
 
                 client_start = inFlightQuery.clientStart
