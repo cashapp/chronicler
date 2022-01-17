@@ -1,0 +1,30 @@
+version: 2.1
+
+jobs:
+  java-test:
+    docker:
+      - image: cimg/openjdk:11.0
+    environment:
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=3"
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - gradle-{{ .Branch }}-{{ .Revision }}
+            - gradle-{{ .Branch }}-
+            - gradle-master-
+            - gradle-
+      - run:
+          name: "Compile"
+          command: |
+            ./gradlew testClasses --parallel --build-cache --no-daemon
+      - save_cache:
+          paths:
+            - ~/.gradle/wrapper
+            - ~/.gradle/caches
+          key: gradle-{{ .Branch }}-{{ .Revision }}
+
+workflows:
+  test:
+    jobs:
+      - java-test
