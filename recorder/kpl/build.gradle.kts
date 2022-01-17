@@ -1,5 +1,7 @@
-apply(plugin = "kotlin")
-apply(plugin = "com.github.johnrengelman.shadow")
+plugins {
+  kotlin("jvm")
+  id("com.github.johnrengelman.shadow") version "7.1.2"
+}
 
 dependencies {
   with(chronicler.Dependencies) {
