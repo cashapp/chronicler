@@ -44,7 +44,7 @@ dependencies {
 }
 
 application {
-  mainClass.set("com.squareup.cash.chronicler.player.MainKt")
+  mainClass.set("app.cash.chronicler.player.MainKt")
   mainClassName = mainClass.get() //Backward compatibility, shadowJar does not like mainClass
 }
 

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package squareup.chronicler;
+package app.cash.chronicler.proto;
 import "google/protobuf/timestamp.proto";
 
 message Statement {
