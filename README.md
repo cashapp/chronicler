@@ -12,7 +12,7 @@ Interceptor can be configured with different sampling strategies and sinks.
 2. In your application code, before any MySQL connections have been established, use `ChroniclerConfigRepository::set(name, config)` to register your named chronicler configuration. `name` can be anything, for instance `"main"`.
 3. Modify the MySQL JDBC connection string to include a query interceptor and `chroniclerConfigName` (any identifier). For example:
 ```
-jdbc:mysql://localhost?queryInterceptors=com.squareup.cash.chronicler.ChroniclerInterceptor&chroniclerConfigName=main
+jdbc:mysql://localhost?queryInterceptors=app.cash.chronicler.recorder.ChroniclerInterceptor&chroniclerConfigName=main
 ```
 
 At this point your sink configuration inside `ChroniclerInterceptor.Config` should start receiving requests according to your provided sampling rules.
