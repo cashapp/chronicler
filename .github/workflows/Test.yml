@@ -4,12 +4,16 @@ on:
   pull_request:
     paths-ignore:
       - '*.md'
+  push:
+    branches:
+      - master
 
 env:
   GRADLE_OPTS: -Dorg.gradle.configureondemand=true -Dkotlin.incremental=false -Dorg.gradle.jvmargs="-XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8"
 
 jobs:
   build:
+    name: "Test"
     runs-on: ubuntu-latest
 
     steps:
