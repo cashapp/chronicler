@@ -1,5 +1,6 @@
 plugins {
   id("com.squareup.wire")
+  id("chronicler.publish")
 }
 
 dependencies {
@@ -27,3 +28,5 @@ sourceSets {
     java.srcDir(listOf("$buildDir/generated/source/wire"))
   }
 }
+
+apply<Chronicler_publish_gradle.ChroniclerPublishPlugin>()

@@ -2,8 +2,6 @@ name: Publish a release
 
 on:
   push:
-    branches:
-      - master
     tags:
       - '*'
 
@@ -32,4 +30,4 @@ jobs:
           ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
           ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD: ${{ secrets.SONATYPE_NEXUS_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.ARTIFACT_SIGNING_PRIVATE_KEY }}
-        run: ./gradlew uploadArchives
+        run: ./gradlew publish

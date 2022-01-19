@@ -1,7 +1,0 @@
-data_source_clusters:
-  franklin-cloud-sandbox-tidb5:
-    writer:
-      database: mysql
-      type: MYSQL
-      host: localhost
-      username: root

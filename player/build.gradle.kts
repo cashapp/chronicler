@@ -4,6 +4,7 @@ plugins {
   application
   kotlin("jvm")
   id("com.github.johnrengelman.shadow") version "7.1.2"
+  id("chronicler.publish")
 }
 
 dependencies {
@@ -65,3 +66,5 @@ kotlin {
     }
   }
 }
+
+apply<Chronicler_publish_gradle.ChroniclerPublishPlugin>()
