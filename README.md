@@ -35,7 +35,12 @@ Chronicler-player is a stand-alone application designed to:
 ### Usage
 Chronicler-player can be executed as a standalone java application: `java -jar chronicler-release.jar <arguments>`. To see the possible arguments run `java -jar chronicler-release.jar --help`.
 
-#License
+* Chronicler-player requires a DynamoDB table for coordination of the Kinesis readers and persistence of cursor between runs. This table can be setup with parameters `--dynamo-region`, `--table-name` and optional ones: `--dynamo-role-arn`, `--dynamo-role-session-prefix` and `--dynamo-external-id`.
+* Multiple instances can be ran in parallel, as long as they share the same `--applicationName` parameter and target the same DDB table. 
+* All players that are supposed to be running in the same cluster have to share the same `--application-name`.
+* Maximum amount of players running in parallel depends on number of shards configured in the Kinesis stream (stream cursor granularity is per-shard). 
+
+# License
     Copyright 2022 Square, Inc.
     
     Licensed under the Apache License, Version 2.0 (the "License");
