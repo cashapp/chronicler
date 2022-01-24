@@ -33,7 +33,7 @@ class ChroniclerPublishPlugin : Plugin<Project> {
       }
 
       repositories {
-        maven("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        maven("https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
           if (SONATYPE_NEXUS_USERNAME != null && SONATYPE_NEXUS_PASSWORD != null) {
             credentials {
               username = SONATYPE_NEXUS_USERNAME
