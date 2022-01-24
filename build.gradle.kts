@@ -30,4 +30,9 @@ subprojects {
       jvmTarget = "11"
     }
   }
+
+  configure<JavaPluginExtension> {
+    withSourcesJar()
+    withJavadocJar()
+  }
 }

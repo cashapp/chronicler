@@ -6,6 +6,8 @@ class ChroniclerPublishPlugin : Plugin<Project> {
     val GROUP: String by target
     val VERSION_NAME: String by target
     val POM_ARTIFACT_NAME: String by target
+    val POM_NAME: String by target
+    val POM_DESCRIPTION: String by target
 
     val signingKey: String? by target
 
@@ -14,19 +16,43 @@ class ChroniclerPublishPlugin : Plugin<Project> {
     target.extensions.configure<PublishingExtension> {
       publications {
         create<MavenPublication>("maven") {
-          groupId = GROUP
           artifactId = POM_ARTIFACT_NAME
+          groupId = GROUP
           version = VERSION_NAME
 
           from(target.components["java"])
 
           pom {
             packaging = "jar"
+
+            name.set(POM_NAME)
+            description.set(POM_DESCRIPTION)
+            url.set("https://github.com/cashapp/chronicler.git")
+
             licenses {
               license {
                 name.set("The Apache License, Version 2.0")
                 url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
               }
+            }
+            developers {
+              developer {
+                id.set("bezmax")
+                name.set("Maksim Bezsaznyj")
+                email.set("bezmax@gmail.com")
+                organization.set("Block Inc.")
+              }
+              developer {
+                id.set("jontirsen")
+                name.set("Jon Tirsen")
+                email.set("jontirsen@squareup.com")
+                organization.set("Block Inc.")
+              }
+            }
+            scm {
+              connection.set("scm:git:git://github.com/cashapp/chronicler.git")
+              developerConnection.set("scm:git:ssh://github.com/cashapp/chronicler.git")
+              url.set("https://github.com/cashapp/chronicler")
             }
           }
         }
