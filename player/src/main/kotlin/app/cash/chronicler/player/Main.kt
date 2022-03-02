@@ -2,6 +2,7 @@ package app.cash.chronicler.player
 
 import app.cash.chronicler.player.ext.parseFancyRegex
 import app.cash.chronicler.player.miskds.TargetMiskDatasourceOptions
+import app.cash.chronicler.player.miskds.DatasourceOptions
 import app.cash.chronicler.player.reader.CloudwatchConfig
 import app.cash.chronicler.player.reader.DynamoDbConfig
 import app.cash.chronicler.player.reader.KinesisConfig
@@ -111,10 +112,14 @@ object Player : CliktCommand() {
     }
     .default(newInitialPosition(InitialPositionInStream.TRIM_HORIZON))
 
+  private val datasourceOptions: DatasourceOptions by DatasourceOptions()
+
   private val miskDatasourceOptions: TargetMiskDatasourceOptions
     by TargetMiskDatasourceOptions()
 
-  private val dbOptions get() = miskDatasourceOptions.mySQLConnectOptions
+  private val dbOptions get() =
+    if (datasourceOptions.isSet) datasourceOptions.mySQLConnectOptions
+    else miskDatasourceOptions.mySQLConnectOptions
 
   private val playbackSpeed: Int
     by option("--playback-speed", help = "Factor by which to speed up time during replay.")
@@ -222,8 +227,7 @@ object Player : CliktCommand() {
 class AssumeRoleOptions(resourceName: String, prefix: String = "$resourceName-") : OptionGroup() {
   val roleArn: String by option("--${prefix}role-arn", help = "Role-arn for access to $resourceName")
     .required()
-  val externalId: String by option("--${prefix}external-id", help = "External-id for access to $resourceName")
-    .required()
+  val externalId: String? by option("--${prefix}external-id", help = "External-id for access to $resourceName")
   val roleSessionNamePrefix: String by option("--${prefix}role-session-prefix", help = "Role-session name prefix for access to $resourceName")
     .default("chronicler-player-")
 }
